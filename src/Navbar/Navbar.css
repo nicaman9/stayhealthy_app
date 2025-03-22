@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: white;
+}
+
+.navbar {
+	height: 100px;
+	width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+	background: rgb(2,0,36);
+	background: linear-gradient(63deg, rgba(2,0,36,1) 0%, rgba(9,16,54,1) 38%, rgba(6,118,140,1) 80%);
+    padding: 15px 40px;
+}
+
+.nav-left .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.nav-center .logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    margin-left: 5px;
+}
+
+.nav-right {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.login-btn {
+    background-color: white;
+    color: black;
+}
+
+.signup-btn {
+    background-color: #1E90FF;
+    color: white;
+}
+
+.login-btn:hover, .signup-btn:hover {
+    opacity: 0.8;
+}
+
+/* Hover effect for navigation links */
+.nav-links li a:hover {
+    font-weight: bold;
+    color: lightblue;
+}
+
+/* Hover effect for buttons */
+.btn:hover {
+    font-weight: bold;
+    transform: scale(1.3);
+    opacity: 0.8;
+    transition: 0.2s ease-in-out;
+}
