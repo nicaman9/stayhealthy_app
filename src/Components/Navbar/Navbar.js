@@ -9,8 +9,8 @@ const Navbar = () => {
             <div className="nav-left">
                 <ul className="nav-links">
                     <li><Link to="/">Home</Link></li>
-                    <li><a href="#">Appointments</a></li>
-                    <li><a href="#">Health Blog</a></li>
+                    <li><Link to="/InstantConsultation">Appointments</Link></li>
+                    <li><Link to="/FindDoctorSearch">Health Blog</Link></li>
                     <li><a href="#">Reviews</a></li>
                 </ul>
             </div>
