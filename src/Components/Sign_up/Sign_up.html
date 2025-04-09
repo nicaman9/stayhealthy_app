@@ -1,93 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="Sign_up.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account</title>
+  <link rel="stylesheet" href="signup.css" />
 </head>
 <body>
-
-    <div class="signup-container">
-        <div class="signup-image">
-            <img src="sign_up.png" alt="Sign Up">
-        </div>
-        <div class="signup-form">
-            <h2>Sign Up</h2>
-			<h4>Already have an account? <a href="/grihf-frontend_capstone_starter_code/Login/Login.html" style="color: #2190FF;" >Login here</a><h4>
-            <form action="#" method="post">
-                <label for="role">Role:</label>
-                <select id="role" name="role" required>
-                    <option value="">Select Role</option>
-                    <option value="doctor">Doctor</option>
-                    <option value="patient">Patient</option>
-                </select>
-
-                <label for="name">Full Name:</label>
-                <input type="text" id="name" name="name" placeholder="Enter your name" required>
-
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" pattern="\d{3}-\d{3}-\d{4}" placeholder="Enter your phone number (xxx-xxx-xxxx)" required>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required>
-
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Enter a password" required>
-				
-				<label for="confirm-password">Confirm Password:</label>
-				<input type="password" id="confirm-password" name="confirm-password" required>
-
-				<span id="password-error" class="error-message"></span>
-
-                <div class="form-buttons">
-                    <button type="submit" class="submit-btn">Submit</button>
-                    <button type="reset" class="reset-btn">Reset</button>
-                </div>
-            </form>
-        </div>
+  <div class="container">
+    <div class="illustration">
+      <img src="signup-illustration.png" alt="Sign Up Illustration" />
     </div>
 
+    <div class="signup-box">
+      <h2>Create Account</h2>
+      <form>
+        <label for="fullname">Fullname</label>
+        <input type="text" id="fullname" placeholder="fullname" required />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="name@uikit.com" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="password" required />
+
+        <label for="role">I am a...</label>
+        <select id="role" required>
+          <option value="">Select role</option>
+          <option value="doctor">Doctor</option>
+          <option value="patient">Patient</option>
+        </select>
+
+        <button type="submit">Create account</button>
+
+        <p class="login-text">Already have an account? <a href="#">Login here</a></p>
+      </form>
+    </div>
+  </div>
 </body>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const password = document.getElementById("password");
-    const confirmPassword = document.getElementById("confirm-password");
-    const errorMessage = document.getElementById("password-error");
-
-    confirmPassword.addEventListener("input", function() {
-        if (password.value !== confirmPassword.value) {
-            errorMessage.textContent = "Passwords do not match!";
-            errorMessage.style.color = "red";
-        } else {
-            errorMessage.textContent = ""; // Clear error if passwords match
-        }
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const phoneInput = document.getElementById("phone");
-
-    phoneInput.addEventListener("input", function (event) {
-        let value = phoneInput.value.replace(/\D/g, ""); // Remove non-numeric characters
-
-        // Format into XXX-XXX-XXXX
-        if (value.length > 3 && value.length <= 6) {
-            value = value.replace(/(\d{3})(\d{1,3})/, "$1-$2");
-        } else if (value.length > 6) {
-            value = value.replace(/(\d{3})(\d{3})(\d{1,4})/, "$1-$2-$3");
-        }
-
-        phoneInput.value = value; // Set formatted value
-    });
-
-    phoneInput.addEventListener("blur", function () {
-        if (phoneInput.value.length !== 12) {
-            alert("Please enter a valid 10-digit phone number in the format 123-456-7890.");
-            phoneInput.focus();
-        }
-    });
-});
-</script>
-
 </html>
