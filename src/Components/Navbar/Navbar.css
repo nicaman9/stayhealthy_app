@@ -1,3 +1,4 @@
+/* Reset and base styles */
 * {
     margin: 0;
     padding: 0;
@@ -9,17 +10,24 @@ body {
     background-color: white;
 }
 
+/* Navbar container */
 .navbar {
-	height: 100px;
-	width: 100%;
+    position: fixed; /* Fix the navbar at the top */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full screen width */
+    z-index: 1000; /* Ensure it stays above other content */
+    height: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-	background: rgb(2,0,36);
-	background: linear-gradient(63deg, rgba(2,0,36,1) 0%, rgba(9,16,54,1) 38%, rgba(6,118,140,1) 80%);
+    background: rgb(2,0,36);
+    background: linear-gradient(63deg, rgba(2,0,36,1) 0%, rgba(9,16,54,1) 38%, rgba(6,118,140,1) 80%);
     padding: 15px 40px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
 }
 
+/* Left section navigation links */
 .nav-left .nav-links {
     list-style: none;
     display: flex;
@@ -33,6 +41,7 @@ body {
     font-size: 16px;
 }
 
+/* Logo in center */
 .nav-center .logo {
     font-size: 22px;
     font-weight: bold;
@@ -45,6 +54,7 @@ body {
     margin-left: 5px;
 }
 
+/* Right side buttons */
 .nav-right {
     display: flex;
     gap: 15px;
@@ -86,4 +96,80 @@ body {
     transform: scale(1.3);
     opacity: 0.8;
     transition: 0.2s ease-in-out;
+}
+
+/* Optional: adjust main content to not be hidden behind the navbar */
+.container {
+    margin-top: 110px; /* Adjust based on navbar height */
+}
+
+/* Elegant form container */
+form {
+    background: linear-gradient(140deg, rgba(2, 0, 36, 0.95) 0%, rgba(9, 16, 54, 0.95) 50%, rgba(6, 118, 140, 0.95) 100%);
+    padding: 30px 25px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    margin: 0 auto;
+    color: #fff;
+}
+
+/* Grouping each input field */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Input, select, textarea */
+.form-control {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: #f1f1f1;
+    color: #333;
+    transition: all 0.3s ease-in-out;
+}
+
+.form-control:focus {
+    outline: none;
+    border: 2px solid #1E90FF;
+    box-shadow: 0 0 6px rgba(30, 144, 255, 0.3);
+    background-color: #fff;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #1E90FF;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0f74d1;
+    transform: scale(1.05);
+}
+
+/* Responsive adjustment */
+@media screen and (max-width: 600px) {
+    form {
+        padding: 20px 15px;
+    }
 }

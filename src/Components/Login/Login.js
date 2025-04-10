@@ -1,64 +1,114 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Login.css';
-import login from '../Login/login.png';
+// Login.js
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { API_URL } from '../../config';
+// Optionally import './Login.css' here if you're styling separately
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  // State variables for email and password
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Logging in with:', { email, password });
-        // Add authentication logic here
-    };
+  const navigate = useNavigate();
 
-    return (
-        <div className="login-container">
-            <div className="login-image">
-                <img src={login} alt="Login" />
-            </div>
-            <div className="login-form">
-                <h2>Login</h2>
-                <h4>Don't have an account? <Link to="/Signup" style={{ color: '#2190FF' }}>Sign up here</Link></h4>
+  // Redirect to home if already logged in
+  useEffect(() => {
+    if (sessionStorage.getItem("auth-token")) {
+      navigate("/");
+    }
+  }, []);
 
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input 
-                            type="email" 
-                            name="email" 
-                            id="email" 
-                            className="form-control" 
-                            placeholder="Enter your email" 
-                            value={email} 
-                            onChange={(e) => setEmail(e.target.value)} 
-                            required 
-                        />
-                    </div>
+  // Handle login form submission
+  const login = async (e) => {
+    e.preventDefault();
+    const res = await fetch(`${API_URL}/api/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
 
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input 
-                            type="password" 
-                            name="password" 
-                            id="password" 
-                            className="form-control" 
-                            placeholder="Enter your password" 
-                            value={password} 
-                            onChange={(e) => setPassword(e.target.value)} 
-                            required 
-                        />
-                    </div>
+    const json = await res.json();
+    if (json.authtoken) {
+      sessionStorage.setItem('auth-token', json.authtoken);
+      sessionStorage.setItem('email', email);
 
-                    <div className="form-buttons">
-                        <button type="submit" className="submit-btn">Submit</button>
-                        <button type="reset" className="reset-btn" onClick={() => { setEmail(''); setPassword(''); }}>Reset</button>
-                    </div>
-                </form>
-            </div>
+      navigate('/');
+      window.location.reload();
+    } else {
+      if (json.errors) {
+        for (const error of json.errors) {
+          alert(error.msg);
+        }
+      } else {
+        alert(json.error);
+      }
+    }
+  };
+
+  return (
+    <div>
+      <div className="container">
+        <div className="login-grid">
+          <div className="login-text">
+            <h2>Login</h2>
+          </div>
+          <div className="login-text">
+            Are you a new member? 
+            <span>
+              <Link to="/signup" style={{ color: '#2190FF' }}>
+                Sign Up Here
+              </Link>
+            </span>
+          </div>
+          <br />
+          <div className="login-form">
+            <form onSubmit={login}>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input 
+                  value={email} 
+                  onChange={(e) => setEmail(e.target.value)} 
+                  type="email" 
+                  name="email" 
+                  id="email" 
+                  className="form-control" 
+                  placeholder="Enter your email" 
+                  aria-describedby="helpId" 
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                {/* Password input field */}
+                <input 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  name="password"
+                  id="password"
+                  className="form-control"
+                  placeholder="Enter your password"
+                  required
+                />
+              </div>
+
+              <div className="btn-group" style={{ marginTop: '20px' }}>
+                <button type="submit" className="btn btn-primary mb-2 mr-1 waves-effect waves-light">
+                  Login
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Login;
