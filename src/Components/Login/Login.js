@@ -1,8 +1,7 @@
-// Login.js
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { API_URL } from '../../config';
-// Optionally import './Login.css' here if you're styling separately
+import loginImage from './login.png';  // Adjust path to the image
 
 const Login = () => {
   // State variables for email and password
@@ -53,7 +52,7 @@ const Login = () => {
   return (
     <div>
       <div className="container">
-        <div className="login-grid">
+        <div className="login-box">
           <div className="login-text">
             <h2>Login</h2>
           </div>
@@ -105,6 +104,9 @@ const Login = () => {
               </div>
             </form>
           </div>
+        </div>
+        <div className="login-image-side">
+          <img src={loginImage} alt="Login Illustration" />
         </div>
       </div>
     </div>

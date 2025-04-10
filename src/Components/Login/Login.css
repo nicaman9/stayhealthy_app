@@ -1,145 +1,97 @@
-/* Basic Reset */
+/* General styles */
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-/* Body Styling */
 body {
-  background-color: #0d1238;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  padding: 20px;
+    background-color: white;
 }
 
-/* Container */
+/* Container for the login page */
 .container {
-  display: flex;
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  max-width: 900px;
-  width: 100%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-top: 7%;
+    display: flex;
+    justify-content: center;
 }
 
-/* Login Form Styling */
-.login-box {
-  flex: 1;
-  padding: 40px;
-  background-color: #f5f5f5;
+/* Login Card */
+.login-card {
+    display: flex;
+    flex-direction: row;
+    background: #ffffff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    width: 90%;
+    max-width: 1000px;
+
+/* Left: Form side */
+.login-form-side {
+    flex: 1;
+    padding: 40px 30px;
+    background: linear-gradient(63deg, rgba(2, 0, 36, 1) 0%, rgba(9, 16, 54, 1) 38%, rgba(6, 118, 140, 1) 80%);
+    color: white;
+
+.login-form-side label {
+    color: white;
+    font-weight: 600;
 }
 
-.login-box h2 {
-  margin-bottom: 30px;
-  color: #333;
-}
-
-/* Inputs */
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0 20px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-/* Options below input */
-.form-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.9em;
-  margin-bottom: 20px;
-}
-
-.form-options a {
-  text-decoration: none;
-  color: #4169e1;
-}
-
-/* Login Button */
-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #4169e1;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 1em;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #325ab3;
-}
-
-/* Sign up text */
-.signup-text {
-  text-align: center;
-  margin-top: 15px;
-  font-size: 0.9em;
-}
-
-.signup-text a {
-  color: #4169e1;
-  text-decoration: none;
-}
-
-/* Illustration Image */
-.illustration {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: white;
-  padding: 20px;
-}
-
-.illustration img {
-  max-width: 80%;
-  height: auto;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .login-box, .illustration {
+.login-form-side .form-control {
+    margin-bottom: 15px;
+    border-radius: 6px;
+    padding: 10px;
     width: 100%;
-    padding: 30px;
-  }
-
-  .form-options {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
+    border: none;
+}
+.login-form-side button {
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #1E90FF;
+    color: white;
+    font-weight: bold;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-@media (max-width: 480px) {
-  .login-box h2 {
-    font-size: 1.5rem;
-  }
+.login-form-side button:hover {
+    background-color: #0f74d1;
+    transform: scale(1.05);
+}
 
-  button {
-    font-size: 0.95rem;
-  }
+/* Right: Image side */
+.login-image-side {
+    flex: 1;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-  .form-options {
-    font-size: 0.85rem;
-  }
+.login-image-side img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    padding: 20px;
+}
 
-  .signup-text {
-    font-size: 0.85rem;
-  }
+/* Responsive styles */
+@media (max-width: 768px) {
+    .login-card {
+        flex-direction: column;
+    }
+
+    .login-image-side {
+        order: -1;
+        padding: 0;
+    }
+
+    .login-form-side {
+        padding: 30px 20px;
+    }
 }
