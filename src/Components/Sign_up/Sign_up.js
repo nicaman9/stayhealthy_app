@@ -60,7 +60,7 @@ const Sign_Up = () => {
           <p className="form-subtext">
             Already registered?{' '}
             <Link to="/Login" style={{ color: '#2190FF' }}>
-              Log in Here
+               Log in Here
             </Link>
           </p>
 

@@ -50,7 +50,7 @@ const Login = () => {
             Are you a new member? 
             <span>
               <Link to="/signup" style={{ color: '#2190FF' }}>
-                Sign Up Here
+                  Sign Up Here
               </Link>
             </span>
           </div>
