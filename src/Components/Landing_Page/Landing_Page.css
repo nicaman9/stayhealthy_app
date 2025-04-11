@@ -2,6 +2,7 @@
     margin: 0;
     font-family: "Poppins", sans-serif;
     box-sizing: border-box;
+    
 }
 .hero-section {
     height: 100vh;
@@ -37,7 +38,7 @@
     padding: 0.7rem 2rem;
     border-radius: 25px;
     background-color: #2190FF;
-    color: #fff;
+    color: #858383;
     border: 1px solid transparent;
     width: 15%;
     margin-top:15px;
