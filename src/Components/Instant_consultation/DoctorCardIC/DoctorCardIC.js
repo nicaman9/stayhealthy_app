@@ -104,4 +104,4 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic }) => 
   );
 };
 
-export default DoctorCardIC;
+export default DoctorCardIC2;
