@@ -1,48 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { API_URL } from '../../config';
-import loginImage from './login.png';  // Adjust path to the image
+import loginImage from './login.png';  // Adjust path if needed
+import "./Login.css";
 
 const Login = () => {
-  // State variables for email and password
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const navigate = useNavigate();
 
-  // Redirect to home if already logged in
   useEffect(() => {
     if (sessionStorage.getItem("auth-token")) {
       navigate("/");
     }
   }, []);
 
-  // Handle login form submission
   const login = async (e) => {
     e.preventDefault();
     const res = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
     });
 
     const json = await res.json();
     if (json.authtoken) {
       sessionStorage.setItem('auth-token', json.authtoken);
       sessionStorage.setItem('email', email);
-
       navigate('/');
       window.location.reload();
     } else {
       if (json.errors) {
-        for (const error of json.errors) {
-          alert(error.msg);
-        }
+        json.errors.forEach(error => alert(error.msg));
       } else {
         alert(json.error);
       }
@@ -50,9 +39,10 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div className="container">
-        <div className="login-box">
+    <div className="container login-wrapper">
+      <div className="login-card">
+        {/* Left side - form */}
+        <div className="login-form-side">
           <div className="login-text">
             <h2>Login</h2>
           </div>
@@ -77,14 +67,12 @@ const Login = () => {
                   id="email" 
                   className="form-control" 
                   placeholder="Enter your email" 
-                  aria-describedby="helpId" 
-                  required
+                  required 
                 />
               </div>
 
               <div className="form-group">
                 <label htmlFor="password">Password</label>
-                {/* Password input field */}
                 <input 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -105,6 +93,8 @@ const Login = () => {
             </form>
           </div>
         </div>
+
+        {/* Right side - image */}
         <div className="login-image-side">
           <img src={loginImage} alt="Login Illustration" />
         </div>
