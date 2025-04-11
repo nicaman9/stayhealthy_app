@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import DoctorCardIC from '../DoctorCardIC/DoctorCardIC';
+import DoctorCard from '../DoctorCard/DoctorCard';
 import FindDoctorSearch from '../FindDoctorSearch/FindDoctorSearch';
-import './BookingConsultation.css'; // optional CSS file
 
 const doctorsList = [
   {
@@ -52,7 +51,7 @@ const BookingConsultation = () => {
       <div className="doctor-cards-list">
         {filteredDoctors.length > 0 ? (
           filteredDoctors.map((doctor, index) => (
-            <DoctorCardIC
+            <DoctorCard
               key={index}
               name={doctor.name}
               speciality={doctor.speciality}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './AppointmentFormIC.css';
 
-const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
+
+const AppointmentForm = ({ doctorName, doctorSpeciality, onSubmit }) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [appointmentDate, setAppointmentDate] = useState('');
@@ -93,4 +93,4 @@ const AppointmentFormIC = ({ doctorName, doctorSpeciality, onSubmit }) => {
   );
 };
 
-export default AppointmentFormIC;
+export default AppointmentForm;
