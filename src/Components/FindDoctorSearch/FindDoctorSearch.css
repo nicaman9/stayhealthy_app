@@ -1,3 +1,16 @@
+.center {
+    padding-top: 120px;
+}
+
+.doctor-cards-list {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .location-search-box {
     display: flex;
     align-items: center;
@@ -77,6 +90,8 @@
     position: absolute;
     margin-top: 25px;
     margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
     box-shadow: rgba(0, 0, 0,.1) 0 - 1px 0 0 inset;
     border-radius: 5px;
     height: 100vh;
@@ -169,6 +184,8 @@
 .finddoctor{
     /* height: 0 auto; */
     overflow: hidden;
+    padding-top: 100px;
+
 } 
 .finddoctor .mainimg{
     width: 312px;
