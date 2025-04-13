@@ -24,7 +24,7 @@ function Navbar() {
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>
           <li><Link to="/BookingConsultation">Appointments</Link></li>
-          <li><Link to="#">Reviews</Link></li>
+          <li><Link to="/Review">Reviews</Link></li>
         </ul>
       </div>
 
