@@ -6,31 +6,31 @@ import AppointmentForm from '../AppointmentForm/AppointmentForm';
 import Notification from '../Notification/Notification';
 
 const doctorsList = [
-  {
-    name: 'Dr. Asha Mehta',
-    speciality: 'Dentist',
-    experience: 12,
-    ratings: 4.7,
-  },
-  {
-    name: 'Dr. Rajiv Kapoor',
-    speciality: 'General Physician',
-    experience: 8,
-    ratings: 4.5,
-  },
-  {
-    name: 'Dr. Neha Sharma',
-    speciality: 'Gynecologist/Obstetrician',
-    experience: 10,
-    ratings: 4.6,
-  },
-  {
-    name: 'Dr. Rohan Verma',
-    speciality: 'Dermatologist',
-    experience: 6,
-    ratings: 4.3,
-  },
-];
+    {
+      name: 'Dr. Asha Mehta',
+      speciality: 'Dentist',
+      experience: 12,
+      ratings: 4.7,
+    },
+    {
+      name: 'Dr. Rajiv Kapoor',
+      speciality: 'General Physician',
+      experience: 8,
+      ratings: 4.5,
+    },
+    {
+      name: 'Dr. Neha Sharma',
+      speciality: 'Gynecologist/Obstetrician',
+      experience: 10,
+      ratings: 4.6,
+    },
+    {
+      name: 'Dr. Rohan Verma',
+      speciality: 'Dermatologist',
+      experience: 6,
+      ratings: 4.3,
+    },
+  ];  
 
 const specialities = [
   'All',

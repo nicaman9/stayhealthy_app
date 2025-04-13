@@ -94,6 +94,14 @@ const Sign_Up = () => {
               />
             </div>
 
+            <div className="form-group"></div>
+            <label for="Role">Role:</label>
+
+            <select name="Role" id="Role">
+                <option value="Patient">Patient</option>
+                <option value="Doctor">Doctor</option>
+            </select>
+
             <div className="form-group">
               <label htmlFor="phone">Phone</label>
               <input
