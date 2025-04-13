@@ -1,98 +1,111 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './FindDoctorSearch.css';
-import { useNavigate } from 'react-router-dom';
 
-const initSpeciality = [
-  'Dentist',
-  'Gynecologist/obstetrician',
-  'General Physician',
-  'Dermatologist',
-  'Ear-nose-throat (ent) Specialist',
-  'Homeopath',
-  'Ayurveda'
-];
-
-const FindDoctorSearch = () => {
-  const [searchDoctor, setSearchDoctor] = useState('');
-  const [filteredSpecialities, setFilteredSpecialities] = useState(initSpeciality);
-  const [doctorResultHidden, setDoctorResultHidden] = useState(true);
+const FindDoctorSearch = ({
+  doctors = [],
+  onSearchResults,
+  onSpecialitySelect,
+  specialities = [],
+  selectedSpeciality = 'All',
+}) => {
+  const [searchText, setSearchText] = useState('');
+  const [searchResultsVisible, setSearchResultsVisible] = useState(false);
   const searchBoxRef = useRef(null);
-  const navigate = useNavigate();
 
-  // Filter specialties based on searchDoctor input
+  // Filter on text input
   useEffect(() => {
-    const results = initSpeciality.filter(spec =>
-      spec.toLowerCase().includes(searchDoctor.toLowerCase())
-    );
-    setFilteredSpecialities(results);
-  }, [searchDoctor]);
+    const delayDebounce = setTimeout(() => {
+      onSearchResults(searchText);
+    }, 300); // debounce delay
+    return () => clearTimeout(delayDebounce);
+  }, [searchText]);
 
-  // Detect clicks outside the search box
+  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (searchBoxRef.current && !searchBoxRef.current.contains(e.target)) {
-        setDoctorResultHidden(true);
+        setSearchResultsVisible(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleDoctorSelect = (speciality) => {
-    setSearchDoctor(speciality);
-    setDoctorResultHidden(true);
-    navigate(`/instant-consultation?speciality=${encodeURIComponent(speciality)}`);
-    window.location.reload();
-  };
+    const handleSearchClick = () => {
+        if (searchDoctor.trim() === '') return;
+
+        onDoctorSearch(searchDoctor.trim()); // pass to parent for filtering
+    };
+
 
   return (
-    <div className="finddoctor">
+    <div className="finddoctor" style={{ paddingBottom: '2rem' }}>
       <center>
         <h1>Find a doctor and Consult instantly</h1>
-        <div>
-          <i style={{ color: '#000000', fontSize: '20rem' }} className="fa fa-user-md"></i>
-        </div>
+
+        {/* Search Input Box */}
         <div className="home-search-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <div className="doctor-search-box" ref={searchBoxRef}>
             <input
               type="text"
               className="search-doctor-input-box"
-              placeholder="Search doctors, clinics, hospitals, etc."
-              value={searchDoctor}
-              onFocus={() => setDoctorResultHidden(false)}
-              onChange={(e) => setSearchDoctor(e.target.value)}
+              placeholder="Search by doctor name or specialty..."
+              value={searchText}
+              onFocus={() => setSearchResultsVisible(true)}
+              onChange={(e) => setSearchText(e.target.value)}
             />
 
             <div className="findiconimg">
-              <img className="findIcon" src={process.env.PUBLIC_URL + '/images/search.svg'} alt="" />
+                <button
+                    type="button"
+                    className="search-button"
+                    onClick={handleSearchClick}>🔍
+                </button>
             </div>
 
-            {!doctorResultHidden && (
+            {searchResultsVisible && searchText.trim() !== '' && (
               <div className="search-doctor-input-results">
-                {
-                  filteredSpecialities.length > 0 ? (
-                    filteredSpecialities.map(speciality => (
-                      <div
-                        className="search-doctor-result-item"
-                        key={speciality}
-                        onMouseDown={() => handleDoctorSelect(speciality)}
-                      >
-                        <span>
-                          <img src={process.env.PUBLIC_URL + '/images/search.svg'} alt="" style={{ height: "10px", width: "10px" }} />
-                        </span>
-                        <span>{speciality}</span>
-                        <span> SPECIALITY </span>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="search-doctor-result-item">
-                      <span>No specialties found</span>
-                    </div>
+                {doctors
+                  .filter(
+                    (doc) =>
+                      doc.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                      doc.speciality.toLowerCase().includes(searchText.toLowerCase())
                   )
-                }
+                  .map((doc, idx) => (
+                    <div key={idx} className="search-doctor-result-item">
+                      <span>
+                        <img
+                          src={process.env.PUBLIC_URL + '/images/search.svg'}
+                          alt=""
+                          style={{ height: '10px', width: '10px' }}
+                        />
+                      </span>
+                      <span>{doc.name}</span>
+                      <span>{doc.speciality}</span>
+                    </div>
+                  ))}
               </div>
             )}
           </div>
+        </div>
+
+        {/* Specialty Dropdown */}
+        <div style={{ marginTop: '1rem' }}>
+          <label htmlFor="speciality-select" style={{ marginRight: '10px' }}>
+            Filter by Speciality:
+          </label>
+          <select
+            id="speciality-select"
+            value={selectedSpeciality}
+            onChange={(e) => onSpecialitySelect(e.target.value)}
+            style={{ padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }}
+          >
+            {specialities.map((spec, idx) => (
+              <option key={idx} value={spec}>
+                {spec}
+              </option>
+            ))}
+          </select>
         </div>
       </center>
     </div>

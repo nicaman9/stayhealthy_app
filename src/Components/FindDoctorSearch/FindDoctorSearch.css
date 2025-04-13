@@ -194,3 +194,14 @@
     object-position: center;
     border-radius: 5px;
 }
+.search-button {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.search-button:hover {
+  background-color: #f0f0f0;
+}

@@ -32,20 +32,52 @@ const doctorsList = [
   },
 ];
 
+const specialities = [
+  'All',
+  ...new Set(doctorsList.map((doc) => doc.speciality)),
+];
+
 const BookingConsultation = () => {
   const [filteredDoctors, setFilteredDoctors] = useState(doctorsList);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedSpeciality, setSelectedSpeciality] = useState('All');
 
-  // Handles doctor filtering from FindDoctorSearch
-  const handleSpecialitySelect = (speciality) => {
-    const filtered = doctorsList.filter(
-      (doc) => doc.speciality.toLowerCase() === speciality.toLowerCase()
-    );
+  // Filter logic that combines search and specialty
+  const filterDoctors = (search = '', speciality = 'All') => {
+    let filtered = [...doctorsList];
+
+    if (speciality !== 'All') {
+      filtered = filtered.filter(
+        (doc) => doc.speciality.toLowerCase() === speciality.toLowerCase()
+      );
+    }
+
+    if (search) {
+      filtered = filtered.filter(
+        (doc) =>
+          doc.name.toLowerCase().includes(search.toLowerCase()) ||
+          doc.speciality.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
     setFilteredDoctors(filtered);
-    setSelectedDoctor(null); // Clear selected doctor when filtering
+    setSelectedDoctor(null); // Clear selected doctor
   };
 
-  // Called when an appointment is submitted
+  // Handle text search from search bar
+  const handleSearchResults = (searchText) => {
+    setSearchQuery(searchText);
+    filterDoctors(searchText, selectedSpeciality);
+  };
+
+  // Handle dropdown specialty change
+  const handleSpecialitySelect = (speciality) => {
+    setSelectedSpeciality(speciality);
+    filterDoctors(searchQuery, speciality);
+  };
+
+  // Handle appointment form submission
   const handleAppointmentSubmit = (appointment) => {
     if (!selectedDoctor) return;
 
@@ -54,10 +86,8 @@ const BookingConsultation = () => {
       speciality: selectedDoctor.speciality,
     };
 
-    // Save doctor info for Notification
     localStorage.setItem('doctorData', JSON.stringify(doctorData));
 
-    // Add doctor name to appointment and save
     const fullAppointment = {
       ...appointment,
       doctor: selectedDoctor.name,
@@ -65,20 +95,27 @@ const BookingConsultation = () => {
 
     localStorage.setItem(selectedDoctor.name, JSON.stringify(fullAppointment));
 
-    // Notify Notification component
     window.dispatchEvent(new Event('appointmentUpdated'));
 
     alert('Appointment booked successfully!');
-    setSelectedDoctor(null); // Optionally hide the form after booking
+    setSelectedDoctor(null);
   };
 
   return (
     <Notification>
       <div className="booking-consultation-page">
-        <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>Book an Instant Consultation</h2>
+        <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>
+          Book an Instant Consultation
+        </h2>
 
-        {/* Search component */}
-        <FindDoctorSearch onSpecialitySelect={handleSpecialitySelect} />
+        {/* Search and specialty dropdown */}
+        <FindDoctorSearch
+          doctors={doctorsList}
+          onSearchResults={handleSearchResults}
+          onSpecialitySelect={handleSpecialitySelect}
+          specialities={specialities}
+          selectedSpeciality={selectedSpeciality}
+        />
 
         {/* Doctor Cards Section */}
         <div className="doctor-cards-list">
@@ -90,12 +127,12 @@ const BookingConsultation = () => {
                 speciality={doctor.speciality}
                 experience={doctor.experience}
                 ratings={doctor.ratings}
-                onClick={() => setSelectedDoctor(doctor)} // Select doctor on card click
+                onClick={() => setSelectedDoctor(doctor)}
               />
             ))
           ) : (
             <p style={{ textAlign: 'center', marginTop: '2rem' }}>
-              No doctors found for the selected speciality.
+              No doctors found for your search.
             </p>
           )}
         </div>
