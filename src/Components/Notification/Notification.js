@@ -56,7 +56,6 @@ const Notification = ({ children }) => {
         <div className="notification-card">
           <h3 className="notif-title">Appointment Booked!</h3>
           <p><strong>Patient:</strong> {appointmentDetails.name}</p>
-          <p><strong>Email:</strong> {appointmentDetails.email}</p>
           <p><strong>Date:</strong> {appointmentDetails.date}</p>
           <p><strong>Time:</strong> {appointmentDetails.time}</p>
           <p><strong>Doctor:</strong> {appointmentDetails.doctor}</p>

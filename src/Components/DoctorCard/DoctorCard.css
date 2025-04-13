@@ -118,6 +118,7 @@
 .doctorbg{
   -webkit-scrollbar {
     display: none;
+    height:auto;
 }
 
 

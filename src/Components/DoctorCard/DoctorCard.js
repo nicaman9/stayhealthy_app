@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import './DoctorCard.css';
@@ -9,6 +9,14 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic, caree
     const [showModal, setShowModal] = useState(false);
     const [appointments, setAppointments] = useState([]);
 
+    // ✅ Load existing appointment from localStorage on mount
+    useEffect(() => {
+        const storedAppointment = JSON.parse(localStorage.getItem(name));
+        if (storedAppointment) {
+            setAppointments([storedAppointment]);
+        }
+    }, [name]);
+
     const handleBooking = () => {
         setShowModal(true);
     };
@@ -16,14 +24,31 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic, caree
     const handleCancel = (appointmentId) => {
         const updatedAppointments = appointments.filter((appointment) => appointment.id !== appointmentId);
         setAppointments(updatedAppointments);
+
+        localStorage.removeItem(name);
+        window.dispatchEvent(new Event('appointmentUpdated'));
     };
 
     const handleFormSubmit = (appointmentData) => {
         const newAppointment = {
             id: uuidv4(),
-            ...appointmentData,
+            name: appointmentData.name,
+            phoneNumber: appointmentData.phoneNumber,
+            date: appointmentData.appointmentDate,   // ✅ Mapped to "date"
+            time: appointmentData.selectedSlot,      // ✅ Mapped to "time"
+            doctor: name,
         };
-        setAppointments([...appointments, newAppointment]);
+
+        const doctorData = {
+            name,
+            speciality,
+        };
+
+        localStorage.setItem('doctorData', JSON.stringify(doctorData));
+        localStorage.setItem(name, JSON.stringify(newAppointment));
+        window.dispatchEvent(new Event('appointmentUpdated'));
+
+        setAppointments([newAppointment]);
         setShowModal(false);
     };
 
@@ -65,7 +90,7 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic, caree
                     onClose={() => setShowModal(false)}
                 >
                     {(close) => (
-                        <div className="doctorbg" style={{ height: '100vh', overflowY: 'scroll', padding: '20px' }}>
+                        <div className="doctorbg" style={{ height: '70%', overflowY: 'scroll', padding: '20px' }}>
                             <div className="doctor-card-profile-image-container">
                                 {profilePic ? (
                                     <img src={profilePic} alt={name} className="doctor-profile-pic" />
@@ -91,6 +116,8 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic, caree
                                         <div className="bookedInfo" key={appointment.id}>
                                             <p><strong>Name:</strong> {appointment.name}</p>
                                             <p><strong>Phone Number:</strong> {appointment.phoneNumber}</p>
+                                            <p><strong>Date:</strong> {appointment.date}</p>
+                                            <p><strong>Time:</strong> {appointment.time}</p>
                                             <button onClick={() => handleCancel(appointment.id)}>Cancel Appointment</button>
                                         </div>
                                     ))}
