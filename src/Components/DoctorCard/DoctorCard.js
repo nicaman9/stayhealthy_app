@@ -90,7 +90,7 @@ const DoctorCardIC = ({ name, speciality, experience, ratings, profilePic, caree
                     onClose={() => setShowModal(false)}
                 >
                     {(close) => (
-                        <div className="doctorbg" style={{ height: '70%', overflowY: 'scroll', padding: '20px' }}>
+                        <div className="doctorbg" style={{ height: '600px', overflowY: 'scroll', padding: '20px' }}>
                             <div className="doctor-card-profile-image-container">
                                 {profilePic ? (
                                     <img src={profilePic} alt={name} className="doctor-profile-pic" />

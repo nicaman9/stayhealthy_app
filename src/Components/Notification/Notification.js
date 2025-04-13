@@ -54,7 +54,7 @@ const Notification = ({ children }) => {
     <div className="notification-wrapper">
       {showNotification && appointmentDetails && (
         <div className="notification-card">
-          <h3 className="notif-title">Appointment Booked!</h3>
+          <h3 className="notif-title">Appointment Details</h3>
           <p><strong>Patient:</strong> {appointmentDetails.name}</p>
           <p><strong>Date:</strong> {appointmentDetails.date}</p>
           <p><strong>Time:</strong> {appointmentDetails.time}</p>
