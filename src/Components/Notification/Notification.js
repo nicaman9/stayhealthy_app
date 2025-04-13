@@ -6,21 +6,39 @@ const Notification = ({ children }) => {
   const [showNotification, setShowNotification] = useState(false);
   const [appointmentDetails, setAppointmentDetails] = useState(null);
 
-  useEffect(() => {
+  // Function to check and load appointment data
+  const loadAppointmentData = () => {
     try {
       const doctorData = JSON.parse(localStorage.getItem('doctorData'));
       if (!doctorData?.name) return;
 
       const storedAppointment = JSON.parse(localStorage.getItem(doctorData.name));
 
-      // Prevent runtime error on malformed storage
       if (storedAppointment && typeof storedAppointment === 'object') {
         setAppointmentDetails(storedAppointment);
         setShowNotification(true);
+      } else {
+        setAppointmentDetails(null);
+        setShowNotification(false);
       }
     } catch (error) {
       console.error('Error reading from localStorage:', error);
     }
+  };
+
+  // Load appointment data on mount and when custom event is triggered
+  useEffect(() => {
+    loadAppointmentData();
+
+    const handleUpdate = () => loadAppointmentData();
+
+    // Listen for a custom event triggered when appointment is updated
+    window.addEventListener('appointmentUpdated', handleUpdate);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('appointmentUpdated', handleUpdate);
+    };
   }, []);
 
   const handleCancel = () => {
@@ -42,7 +60,9 @@ const Notification = ({ children }) => {
           <p><strong>Date:</strong> {appointmentDetails.date}</p>
           <p><strong>Time:</strong> {appointmentDetails.time}</p>
           <p><strong>Doctor:</strong> {appointmentDetails.doctor}</p>
-          <button className="notif-cancel-btn" onClick={handleCancel}>Cancel Appointment</button>
+          <button className="notif-cancel-btn" onClick={handleCancel}>
+            Cancel Appointment
+          </button>
         </div>
       )}
       {children}
