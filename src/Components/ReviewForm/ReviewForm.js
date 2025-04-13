@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './ReviewForm.css';
 
+// ⭐ StarRating Component
 const StarRating = ({ rating, setRating }) => {
   const [hoveredStar, setHoveredStar] = useState(0);
 
@@ -27,11 +28,11 @@ const StarRating = ({ rating, setRating }) => {
   );
 };
 
-
-const ReviewForm = ({ doctor, onSubmit }) => {
-  const [name, setName] = useState('');
-  const [review, setReview] = useState('');
-  const [rating, setRating] = useState(0);
+// ✏️ ReviewForm Component
+const ReviewForm = ({ doctor, onSubmit, initialData }) => {
+  const [name, setName] = useState(initialData?.name || '');
+  const [review, setReview] = useState(initialData?.review || '');
+  const [rating, setRating] = useState(initialData?.rating || 0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,7 +41,7 @@ const ReviewForm = ({ doctor, onSubmit }) => {
 
   return (
     <div className="review-form-wrapper">
-      <h2>Leave a Review for {doctor.name}</h2>
+      <h2>{initialData ? 'Edit' : 'Leave'} a Review for {doctor.name}</h2>
       <form onSubmit={handleSubmit}>
         <label>Name:</label>
         <input
@@ -62,13 +63,14 @@ const ReviewForm = ({ doctor, onSubmit }) => {
         <label>Rating:</label>
         <StarRating rating={rating} setRating={setRating} />
 
-        <button type="submit">Submit Review</button>
+        <button type="submit">{initialData ? 'Update Review' : 'Submit Review'}</button>
       </form>
     </div>
   );
 };
 
-const Reviews = () => {
+// 🧠 Main Reviews Component
+const Review = () => {
   const [doctors, setDoctors] = useState([
     {
       id: 1,
@@ -85,13 +87,15 @@ const Reviews = () => {
   ]);
 
   const [activeDoctor, setActiveDoctor] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleReviewSubmit = (id, reviewData) => {
-    const updated = doctors.map((doc) =>
+    const updatedDoctors = doctors.map((doc) =>
       doc.id === id ? { ...doc, review: reviewData } : doc
     );
-    setDoctors(updated);
+    setDoctors(updatedDoctors);
     setActiveDoctor(null);
+    setIsEditing(false);
   };
 
   return (
@@ -117,30 +121,51 @@ const Reviews = () => {
                       <td>{doc.specialty}</td>
                       <td>
                         {!doc.review ? (
-                          <button onClick={() => setActiveDoctor(doc)}>
+                          <button onClick={() => { setActiveDoctor(doc); setIsEditing(false); }}>
                             Click Here
                           </button>
                         ) : (
                           '—'
                         )}
                       </td>
-                      <td>{doc.review ? '✓' : '✗'}</td>
+                      <td>
+                        {doc.review ? (
+                          <>
+                            ✓{' '}
+                            <button
+                              className="edit-button"
+                              onClick={() => {
+                                setActiveDoctor(doc);
+                                setIsEditing(true);
+                              }}
+                            >
+                              Edit
+                            </button>
+                          </>
+                        ) : (
+                          '✗'
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </>
           ) : (
-            <ReviewForm doctor={activeDoctor} onSubmit={handleReviewSubmit} />
+            <ReviewForm
+              doctor={activeDoctor}
+              onSubmit={handleReviewSubmit}
+              initialData={isEditing ? activeDoctor.review : null}
+            />
           )}
         </div>
 
         <div className="signup-image-side">
-          <img src="/feedback-image-placeholder.png" alt="Review" />
+          <img src="/feedback-image-placeholder.png" alt="Feedback Illustration" />
         </div>
       </div>
     </div>
   );
 };
 
-export default Reviews;
+export default Review;
