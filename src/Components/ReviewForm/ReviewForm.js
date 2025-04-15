@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ReviewForm.css';
+import reviewImage from './review.png'; 
 
 // ⭐ StarRating Component
 const StarRating = ({ rating, setRating }) => {
@@ -161,7 +162,7 @@ const Review = () => {
         </div>
 
         <div className="signup-image-side">
-          <img src="/feedback-image-placeholder.png" alt="Feedback Illustration" />
+          <img src={reviewImage} alt="Feedback Illustration" />
         </div>
       </div>
     </div>
