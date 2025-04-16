@@ -4,6 +4,7 @@ import './FindDoctorSearch.css';
 const FindDoctorSearch = ({
   doctors = [],
   onSearchResults,
+  onDoctorSearch, // Added this prop
   onSpecialitySelect,
   specialities = [],
   selectedSpeciality = 'All',
@@ -12,13 +13,13 @@ const FindDoctorSearch = ({
   const [searchResultsVisible, setSearchResultsVisible] = useState(false);
   const searchBoxRef = useRef(null);
 
-  // Filter on text input
+  // Filter on text input (debounced)
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       onSearchResults(searchText);
     }, 300); // debounce delay
     return () => clearTimeout(delayDebounce);
-  }, [searchText]);
+  }, [searchText, onSearchResults]);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -31,12 +32,10 @@ const FindDoctorSearch = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-    const handleSearchClick = () => {
-        if (searchDoctor.trim() === '') return;
-
-        onDoctorSearch(searchDoctor.trim()); // pass to parent for filtering
-    };
-
+  const handleSearchClick = () => {
+    if (searchText.trim() === '') return;
+    onDoctorSearch(searchText.trim());
+  };
 
   return (
     <div className="finddoctor" style={{ paddingBottom: '2rem' }}>
@@ -44,7 +43,10 @@ const FindDoctorSearch = ({
         <h1>Find a doctor and Consult instantly</h1>
 
         {/* Search Input Box */}
-        <div className="home-search-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div
+          className="home-search-container"
+          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        >
           <div className="doctor-search-box" ref={searchBoxRef}>
             <input
               type="text"
@@ -56,11 +58,13 @@ const FindDoctorSearch = ({
             />
 
             <div className="findiconimg">
-                <button
-                    type="button"
-                    className="search-button"
-                    onClick={handleSearchClick}>🔍
-                </button>
+              <button
+                type="button"
+                className="search-button"
+                onClick={handleSearchClick}
+              >
+                🔍
+              </button>
             </div>
 
             {searchResultsVisible && searchText.trim() !== '' && (
