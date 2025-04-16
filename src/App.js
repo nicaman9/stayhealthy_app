@@ -11,6 +11,7 @@ import BookingConsultation from './Components/BookingConsultation/BookingConsult
 import Notification from './Components/Notification/Notification';
 import Review from './Components/ReviewForm/ReviewForm';
 import ProfileCard from './Components/ProfileCard/ProfileCard';
+import ReportsLayout from './Components/ReportsLayout/ReportsLayout';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/BookingConsultation" element={<BookingConsultation />} />
             <Route path="/Review" element={<Review />} />
             <Route path="/ProfileCard" element={<ProfileCard />} />
+            <Route path="/ReportsLayout" element={<ReportsLayout />} />
           </Routes>
         </Notification>
       </BrowserRouter>

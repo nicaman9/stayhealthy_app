@@ -55,7 +55,7 @@ function Navbar() {
               {isDropdownOpen && (
                 <div className="dropdown-content">
                   <Link to="/ProfileCard" onClick={() => setDropdownOpen(false)}>View Profile</Link>
-                  <Link to="/settings" onClick={() => setDropdownOpen(false)}>Settings</Link>
+                  <Link to="/ReportsLayout" onClick={() => setDropdownOpen(false)}>Your Reports</Link>
                   <button onClick={handleLogout} className="logout-btn" style={{ width: '100%', textAlign: 'left' }}>
                     Logout
                   </button>

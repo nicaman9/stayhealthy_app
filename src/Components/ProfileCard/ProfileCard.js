@@ -105,7 +105,6 @@ const ProfileCard = () => {
               type="email"
               name="email"
               value={updatedDetails.email}
-              disabled // Disable the email field
             />
           </label>
           <label>

@@ -1,0 +1,89 @@
+/* src/components/ReportsLayout/ReportsLayout.css */
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Comic Sans MS', sans-serif;
+}
+
+body {
+    background-color: rgb(176, 198, 236);
+}
+
+/* Wrapper */
+.reports-layout {
+    margin-top: 7%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Main table container */
+.reports-table {
+    display: flex;
+    flex-direction: column;
+    background: rgb(94, 115, 151);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    width: 90%;
+    max-width: 800px; /* Adjusted for reports table */
+    padding: 20px; /* Added padding for inner spacing */
+    color: white;
+}
+
+/* Table styles */
+.reports-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.reports-table th,
+.reports-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.reports-table th {
+    background-color: #1E90FF;
+    color: white;
+}
+
+.reports-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Light hover effect */
+}
+
+/* Button styles */
+.reports-table button {
+    padding: 8px 12px;
+    background-color: #1E90FF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.reports-table button:hover {
+    background-color: #0f74d1;
+}
+/* Button container to align buttons */
+.button-container {
+    display: flex;
+    justify-content: center; /* Center the buttons */
+    align-items: center; /* Align items vertically */
+}
+
+/* Optional: Add some spacing between buttons if needed */
+.button-container button {
+    margin: 0 5px; /* Add horizontal spacing between buttons */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .reports-table {
+        width: 100%; /* Full width on smaller screens */
+    }
+}
