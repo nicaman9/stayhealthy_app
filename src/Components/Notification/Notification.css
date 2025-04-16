@@ -6,7 +6,7 @@
 .notification-card {
   position: fixed;
   top: 80px;
-  right: 30px;
+  left: 30px;
   background: linear-gradient(63deg, rgba(2, 0, 36, 1) 0%, rgba(9, 16, 54, 1) 38%, rgba(6, 118, 140, 1) 80%);
   color: white;
   padding: 20px 25px;
