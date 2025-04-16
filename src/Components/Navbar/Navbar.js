@@ -1,5 +1,5 @@
 // Navbar.js
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../Navbar/logo.png';
 import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -16,6 +16,13 @@ function Navbar() {
     sessionStorage.clear();
     navigate('/login');
     window.location.reload();
+  };
+
+  // State to manage the visibility of the profile drop-down
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -41,7 +48,20 @@ function Navbar() {
             <span className="username-display" style={{ marginRight: '15px', fontWeight: 'bold' }}>
               Hi, {username}
             </span>
-            <button onClick={handleLogout} className="btn logout-btn">Logout</button>
+            <div className="dropdown">
+              <button onClick={toggleDropdown} className="btn profile-btn">
+                Profile
+              </button>
+              {isDropdownOpen && (
+                <div className="dropdown-content">
+                  <Link to="/ProfileCard" onClick={() => setDropdownOpen(false)}>View Profile</Link>
+                  <Link to="/settings" onClick={() => setDropdownOpen(false)}>Settings</Link>
+                  <button onClick={handleLogout} className="logout-btn" style={{ width: '100%', textAlign: 'left' }}>
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           </>
         ) : (
           <>

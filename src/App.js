@@ -10,6 +10,7 @@ import FindDoctorSearch from './Components/FindDoctorSearch/FindDoctorSearch';
 import BookingConsultation from './Components/BookingConsultation/BookingConsultation';
 import Notification from './Components/Notification/Notification';
 import Review from './Components/ReviewForm/ReviewForm';
+import ProfileCard from './Components/ProfileCard/ProfileCard';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/FindDoctorSearch" element={<FindDoctorSearch />} />
             <Route path="/BookingConsultation" element={<BookingConsultation />} />
             <Route path="/Review" element={<Review />} />
+            <Route path="/ProfileCard" element={<ProfileCard />} />
           </Routes>
         </Notification>
       </BrowserRouter>
